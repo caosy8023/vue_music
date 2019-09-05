@@ -31,7 +31,7 @@ export default {
   props: {},
   data() {
     return {
-      topList:[]
+      topList:[],
     };
   },
   watch: {},
@@ -50,12 +50,7 @@ export default {
         url:'/api/v8/fcg-bin/fcg_myqq_toplist.fcg',
         params:this.basicParams
       }).then(res => {
-        // console.log(res.data)
-        var data = res.data
-        var first = data.indexOf('(')+1
-        var last = data.lastIndexOf(')')
-        this.topList = JSON.parse(data.substring(first,last)).data.topList
-        // console.log(this.topList)
+        this.topList = res.data.data.topList
       }).catch(err => {
 
       })
