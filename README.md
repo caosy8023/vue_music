@@ -4,10 +4,11 @@
 ## 技术栈：vue vuex axios rem适配 flex布局
 ## 内含打包好的apk安装包，可下载在手机上演示，
 ## PC端
->1 npm install下载依赖 
- 2 npm run dev 或 npm start 
- 3 打包：npm run build 
- 4 chrome f12查看
+``` bash
+1 npm install下载依赖 
+2 npm run dev 或 npm start 
+3 打包：npm run build 
+4 chrome f12查看
 ## Build Setup
 
 ``` bash
