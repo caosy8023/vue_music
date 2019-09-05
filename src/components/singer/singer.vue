@@ -68,7 +68,7 @@ export default {
     play(songmid,songname,singername,albumname,albummid,index){
       axios({
         method:'get',
-        url:'/api/base/fcgi-bin/fcg_music_express_mobile3.fcg',
+        url:'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg',
         params:{
           ...this.basicParams,
           guid:'2095717240',
@@ -111,14 +111,15 @@ export default {
           }
         }
         if(index == 0){
+          console.log(this.songList1.length)
           playAround = {
             prev:{
-              songmid:this.songList[this.songList1.length-1].data.songmid,
-              songname:this.songList[this.songList1.length-1].data.songname,
-              singername:this.songList[this.songList1.length-1].data.singer[0].name,
-              albumname:this.songList[this.songList1.length-1].data.albumname,
-              albummid:this.songList[this.songList1.length-1].data.albummid,
-              index:this.songList.length-1
+              songmid:this.songList1[this.songList1.length-1].data.songmid,
+              songname:this.songList1[this.songList1.length-1].data.songname,
+              singername:this.songList1[this.songList1.length-1].data.singer[0].name,
+              albumname:this.songList1[this.songList1.length-1].data.albumname,
+              albummid:this.songList1[this.songList1.length-1].data.albummid,
+              index:this.songList1.length-1
             },
             next:{
               songmid:this.songList1[index+1].data.songmid,
@@ -163,7 +164,7 @@ export default {
     },
     getSinger(){
         axios({
-            url:'/api/v8/fcg-bin/fcg_v8_singer_track_cp.fcg',
+            url:'https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg',
             method:'get',
             params:{
                 ...this.basicParams,

@@ -79,7 +79,7 @@ export default {
       // console.log(songmid)
       axios({
         method:'get',
-        url:'/api/base/fcgi-bin/fcg_music_express_mobile3.fcg',
+        url:'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg',
         params:{
           ...this.basicParams,
           guid:'2095717240',
@@ -174,7 +174,7 @@ export default {
     },
     getRankList(){
       axios({
-        url:'/api/v8/fcg-bin/fcg_v8_toplist_cp.fcg',
+        url:'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg',
         method:'get',
         params:{
           ...this.basicParams,

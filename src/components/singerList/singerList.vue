@@ -39,7 +39,7 @@ export default {
     getSingerList(){
       axios({
         method:'get',
-        url:'/api/v8/fcg-bin/v8.fcg',
+        url:'https://c.y.qq.com/v8/fcg-bin/v8.fcg',
         params:{
           g_tk: 1604785682,
           uin: 494873674, // qq acount

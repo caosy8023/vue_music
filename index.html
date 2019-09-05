@@ -28,7 +28,7 @@
                 first = null
             }, 1000)
         } else {
-            if (new Date().getTime() - first < 1000) {//如果两次按下的时间小于1s，
+            if (new Date().getTime() - first < 500) {//如果两次按下的时间小于0.5s，
                 plus.runtime.quit()//那么就退出app
     } } }
   </script>

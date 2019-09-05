@@ -22,7 +22,7 @@ export default {
     [GET_PLAYAROUND](state,data){
         state.playAround = data
         localStorage.setItem('playAround',JSON.stringify(state.playAround))
-        console.log(state.playAround)
+        // console.log(state.playAround)
     },
     [GET_SONGLIST](state,data){
         state.songList = data

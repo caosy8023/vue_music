@@ -6,7 +6,7 @@
       <router-view v-if="!$route.meta.keepAlive"></router-view>
     
     <div @click="goPlaying" v-show="$route.meta.tabbar" class="tabbar">
-      <img :style="'transform:rotate('+transform+'deg)'" class="logo" src="https://y.gtimg.cn/mediastyle/mobile/app/share/img/music_logo.png?max_age=2592000&v=30cd379f7b9491439f2e8dcd6e1508b6" alt="">
+      <img :style="'transform:rotate('+transform+'deg)'" class="logo" :src="`http://imgcache.qq.com/music/photo_new/T002R150x150M000${$store.getters.playDetail.albummid}.jpg?max_age=2592000`" alt="">
       <img v-show="!$store.getters.isPlay" class="play" @click.stop="playMusic" src="./assets/play-2.png" alt="">
       <img v-show="$store.getters.isPlay" class="play" @click.stop="pauseMusic" src="./assets/pause-2.png" alt="">
       <div class="detail">
@@ -112,7 +112,7 @@ export default {
       // console.log(songmid)
       axios({
         method:'get',
-        url:'/api/base/fcgi-bin/fcg_music_express_mobile3.fcg',
+        url:'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg',
         params:{
           ...this.basicParams,
           guid:'2095717240',
@@ -244,6 +244,7 @@ export default {
     width: 100%;
     bottom: 0;
     .logo{
+      border-radius: 50%;
       height: 45px;
       width: 45px;
       margin-top: 5px;
