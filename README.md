@@ -1,6 +1,7 @@
 # qqmusic
 
 > A Vue.js project
+技术栈：vue vuex axios rem适配 flex布局
 
 ## Build Setup
 
