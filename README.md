@@ -22,8 +22,7 @@
 3 打包：npm run build 
 4 chrome f12查看
 ## 配置跨域获取QQ音乐数据接口
->
-1 在config/index.js中配置
+>1 在config/index.js中配置
     proxyTable: {
       '/api':{
         target:'https://c.y.qq.com/',
@@ -38,7 +37,7 @@
         }
       }
     },
-2 在main.js,配置全局的公共请求参数params,在axios请求数据时公共参数this.basicParams,也可以自己全部写入
+>2 在main.js,配置全局的公共请求参数params,在axios请求数据时公共参数this.basicParams,也可以自己全部写入
     Vue.prototype.basicParams = {
         g_tk: 1604785682,
         uin: 494873674, // qq acount
@@ -68,7 +67,7 @@
         ...this.basicParams,
         guid:'21231'
     }
-3 在组件内axios请求
+>3 在组件内axios请求
   比如：
     axios({
         method:'get',
@@ -89,7 +88,7 @@
         console.log(err)
     })
 ## QQ音乐数据接口API
-1 首页轮播图数据api:
+>1 首页轮播图数据api:
     axios({
         method:'get',
         url:'/api/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg',
@@ -99,7 +98,7 @@
     }).catch(err => {
 
     })
-2 首页热门推荐数据api:
+>2 首页热门推荐数据api:
     axios({
         url:'/api/v8/fcg-bin/fcg_v8_toplist_cp.fcg',
         method:'get',
@@ -123,7 +122,7 @@
     }).catch(err => {
         
     })
-3 歌手列表api:
+>3 歌手列表api:
     axios({
         method:'get',
         url:'/api/v8/fcg-bin/v8.fcg',
@@ -150,7 +149,7 @@
     }).catch(err => {
 
     })
-4 旁行榜列表api:
+>4 旁行榜列表api:
     axios({
         method:'get',
         url:'/api/v8/fcg-bin/fcg_myqq_toplist.fcg',
