@@ -1,0 +1,6 @@
+export const GET_PLAY = 'GET_PLAY'
+export const IS_PLAY = 'IS_PLAY'
+export const GET_PLAYDEFAIL = 'GET_PLAYDEFAIL'
+export const GET_ISEND = 'GET_ISEND'
+export const GET_PLAYAROUND = 'GET_PLAYAROUND'
+export const GET_SONGLIST = 'GET_SONGLIST'
