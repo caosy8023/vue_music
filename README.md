@@ -1,7 +1,6 @@
 # qqmusic
 
 > A Vue.js project 通过解析qq音乐api
-``` bash
 完成部分：1 歌手 
          2 排行 
          3 首页 
