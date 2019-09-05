@@ -3,7 +3,6 @@
         <mt-header title="电台">
           <mt-button @click="back" icon="back" slot="left"></mt-button>
         </mt-header>
-         
     </div>
 </template>
 
