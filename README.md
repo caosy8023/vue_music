@@ -88,6 +88,7 @@
         console.log(err)
     })
 ## QQ音乐数据接口API
+``` bash
 >1 首页轮播图数据api:
     axios({
         method:'get',
