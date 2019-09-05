@@ -13,8 +13,8 @@
 >未完成部分：电台
 
 ## 基于Vue的高仿QQ音乐webapp
-## 技术栈：vue vuex axios vue-router mint-ui rem适配 flex布局
-## 内含打包好的apk安装包，可下载在手机上演示
+## 技术栈：vue vuex axios rem适配 flex布局
+## 内含打包好的apk安装包，可下载在手机上演示,想学习如何打包成apk装包在手机上调试，可直接Issue
 ## PC端
 ``` bash
 1 npm install下载依赖 
