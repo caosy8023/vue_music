@@ -1,14 +1,17 @@
 # qqmusic
 
 > A Vue.js project 通过解析qq音乐api
-完成部分：1 歌手 
+>完成部分：
+
+         1 歌手 
          2 排行 
          3 首页 
          4 推荐随机歌曲 
          5 歌手列表 
          6 歌曲播放 
          7 歌曲切换 
-未完成部分：电台
+>未完成部分：电台
+
 ## 基于Vue的高仿QQ音乐webapp
 ## 技术栈：vue vuex axios rem适配 flex布局
 ## 内含打包好的apk安装包，可下载在手机上演示
