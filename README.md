@@ -22,6 +22,7 @@
 3 打包：npm run build 
 4 chrome f12查看
 ## 配置跨域获取QQ音乐数据接口
+``` bash
 >1 在config/index.js中配置
     proxyTable: {
       '/api':{
@@ -87,7 +88,7 @@
     }).catch(err => {
         console.log(err)
     })
-## QQ音乐数据接口API
+##QQ音乐数据接口API
 ``` bash
 >1 首页轮播图数据api:
     axios({
@@ -128,22 +129,22 @@
         method:'get',
         url:'/api/v8/fcg-bin/v8.fcg',
         params:{
-        g_tk: 1604785682,
-        uin: 494873674,
-        format: 'json',
-        inCharset: 'utf-8',
-        outCharset: 'utf-8',
-        notice: 0,
-        platform:'h5',
-        needNewCode: 0,
-        _: new Date().getTime(),
-        page: 'list',
-        channel: 'singer',
-        pagesize: 100,
-        hostUin: 0,
-        pagenum: 1,
-        key: 'all_all_all',
-        hostUin:0
+            g_tk: 1604785682,
+            uin: 494873674,
+            format: 'json',
+            inCharset: 'utf-8',
+            outCharset: 'utf-8',
+            notice: 0,
+            platform:'h5',
+            needNewCode: 0,
+            _: new Date().getTime(),
+            page: 'list',
+            channel: 'singer',
+            pagesize: 100,
+            hostUin: 0,
+            pagenum: 1,
+            key: 'all_all_all',
+            hostUin:0
         }
     }).then(res => {
        
