@@ -7,7 +7,7 @@
           <mt-index-list>
             <mt-index-section v-for="item in sort" :key="item" :index="item">
               <mt-cell v-for="item2 in singerSort(item)" :key="item2.Fsinger_mid">
-                 <img @click="getSinger(item2.Fsinger_mid)" class="avator" v-lazy="getAvator(item2.Fsinger_mid)">&nbsp;&nbsp;&nbsp;
+                 <img @click="getSinger(item2.Fsinger_mid)" class="avator" :src="getAvator(item2.Fsinger_mid)">&nbsp;&nbsp;&nbsp;
                  <span  @click="getSinger(item2.Fsinger_mid)">{{item2.Fsinger_name}}</span>
               </mt-cell>
             </mt-index-section>

@@ -1,49 +1,62 @@
 <template>
     <div class="index">
-        <mt-header v-if="show" fixed title="音乐馆"></mt-header>
+        <mt-header v-show="show" fixed title="音乐馆"></mt-header>
         <mt-search
-        @click="focus"
+        @submit="search"
         v-model="value"
         cancel-text="取消"
         placeholder="搜索">
         </mt-search>
-        <mt-swipe>
-            <mt-swipe-item v-for="item in indexMsg.slider" :key="item.id">
-                <a :href="item.linkUrl" target="_blank">
-                    <img :src="item.picUrl" alt="" width="100%" height="100%">
-                </a>
-            </mt-swipe-item>
-        </mt-swipe>
-        <ul class="radio">
-            <li class="radio-item" @click="$router.push({path:item.route})" v-for="item in radioList" :key="item.url">
-                <img :src="item.url" alt="">
-                <span>{{item.title}}</span>
-            </li>
-        </ul>
-        <div class="title">热 门 推 荐</div>
-        <div class="hot">
-            <div class="content">
-                <div class="main">
-                    <div @click="play(item.data.songmid,item.data.songname,item.data.singer[0].name,item.data.albumname,item.data.albummid,index)" v-for="(item,index) in hotMusic" :key="index" class="hot-item">
-                        <img :src="`http://imgcache.qq.com/music/photo_new/T002R150x150M000${item.data.albummid}.jpg?max_age=2592000`" alt="">
-                        <div class="detail">
-                            <div class="albumname">
-                                专辑：{{item.data.albumname}}
-                            </div>
-                            <div class="albumname">
-                                歌曲：{{item.data.songname}}
-                            </div>
-                            <div class="albumname">
-                                演唱：{{item.data.singer[0].name}}
-                            </div>
-                            <div class="albumname">
-                                点击量：{{item.data.switch}}
+        <div v-show="!show" class="search-list">
+            <p v-show="!isSearch">热门搜索</p>
+            <div v-show="!isSearch" v-for="(item,index) in result" :key="index" class="serach-item">
+                {{item.k}}
+            </div>
+            <div v-show="isSearch" class="searching" v-for="item in searchMusic" :key="item.id">
+             <span class="name">{{item.name}}</span>&nbsp;-&nbsp;<span class="singer">{{item.singer}}</span>
+            </div>
+        </div>
+        
+        <div v-show="show">
+            <mt-swipe>
+                <mt-swipe-item v-for="item in indexMsg.slider" :key="item.id">
+                    <a :href="item.linkUrl" target="_blank">
+                        <img :src="item.picUrl" alt="资源加载失败" width="100%" height="100%">
+                    </a>
+                </mt-swipe-item>
+            </mt-swipe>
+            <ul class="radio">
+                <li class="radio-item" @click="$router.push({path:item.route})" v-for="item in radioList" :key="item.url">
+                    <img :src="item.url" alt="">
+                    <span>{{item.title}}</span>
+                </li>
+            </ul>
+            <div class="title">热 门 推 荐</div>
+            <div class="hot">
+                <div class="content">
+                    <div class="main">
+                        <div @click="play(item.data.songmid,item.data.songname,item.data.singer[0].name,item.data.albumname,item.data.albummid,index)" v-for="(item,index) in hotMusic" :key="index" class="hot-item">
+                            <img v-lazy="`http://imgcache.qq.com/music/photo_new/T002R150x150M000${item.data.albummid}.jpg?max_age=2592000`" alt="">
+                            <div class="detail">
+                                <div class="albumname">
+                                    专辑：{{item.data.albumname}}
+                                </div>
+                                <div class="albumname">
+                                    歌曲：{{item.data.songname}}
+                                </div>
+                                <div class="albumname">
+                                    演唱：{{item.data.singer[0].name}}
+                                </div>
+                                <div class="albumname">
+                                    点击量：{{item.data.switch}}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
     </div>
 </template>
 
@@ -55,6 +68,7 @@ export default {
   props: {},
   data() {
     return {
+        result:[],
         value:'',
         show:true,
         indexMsg:{},
@@ -63,17 +77,42 @@ export default {
             {url:require('./img/paihang.png'),title:'排行',route:'/topList'},
             {url:require('./img/diantai.png'),title:'电台',route:'/radioList'}
         ],
-        hotMusic:[]
+        hotMusic:[],
+        isSearch:false,
+        searchMusic:[]
     };
   },
-  watch: {},
+  watch: {
+      value:{
+          handler(newV,oldV){
+              if(newV != '' && newV != null){
+                  this.isSearch = true
+                axios({
+                    url:'https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg',
+                    method:'get',
+                    params:{
+                        ...this.basicParams,
+                        s_xml: 0,
+                        key: this.value,
+                    }
+                }).then(res => {
+                    this.searchMusic = res.data.data.song.itemlist
+                }).catch(err => {
+                    console.log(err)
+                })
+              }else{
+                  this.isSearch = false
+              }
+          },
+          deep:true
+      }
+  },
   computed: {
       
   },
   methods: {
-      focus(){
-          this.show = false
-          console.log(11)
+      search(){
+          console.log(this.value)
       },
       play(songmid,songname,singername,albumname,albummid,index){
         // console.log(songmid)
@@ -194,7 +233,7 @@ export default {
               }
           }).then(res => {
               this.hotMusic = res.data.songlist
-              console.log(res.data.songlist)
+            //   console.log(res.data.songlist)
           }).catch(err => {
               console.log(err)
           })
@@ -210,12 +249,47 @@ export default {
           }).catch(err => {
 
           })
+      },
+      getHotkeys(){
+          axios({
+              url:'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg',
+              method:'get',
+              params:{
+                  ...this.basicParams
+              }
+          }).then(res => {
+              this.result = res.data.data.hotkey
+            //   console.log(this.result)
+          }).catch(err => {
+              console.log(err)
+          })
       }
   },
   created() {},
   mounted() {
+      var _this = this
       this.getIndexMsg()
       this.getHotMusic()
+      this.getHotkeys()
+      var input = document.querySelector('.mint-searchbar-core')
+      var div = document.querySelector('.mint-search')
+      var s = document.querySelector('.mint-searchbar-cancel')
+      s.addEventListener('click',function(){
+        s.style.display = 'none'
+      })
+      input.addEventListener('focus',function(){
+          _this.show = false
+          div.style.top = 0
+          s.style.display = 'inline'
+      })
+      input.addEventListener('change',function(){
+          
+      })
+      var btn = document.querySelector('.mint-searchbar-cancel')
+      btn.addEventListener('click',function(){
+          _this.show = true
+          div.style.top = '0.8rem'
+      })
   }
 };
 </script>
@@ -257,6 +331,55 @@ export default {
         padding-top: 28px;
         height: 150px;
         // background: #cccc;
+    }
+    .search-list{
+        position: absolute;
+        overflow: auto;
+        top: 53px;
+        left: 0;
+        right: 0;
+        bottom: 56px;
+        background-color: white;
+        p{
+            margin: 10px 0;
+            font-size: 14px;
+            height: 16px;
+            line-height: 16px;
+            padding: 0 5px;
+        }
+        .serach-item{
+            border-top: 1px solid #f5efef;
+            height: 40px;
+            font-size: 16px;
+            line-height: 40px;
+            padding: 5px 15px;
+        }
+        .serach-item:hover{
+            background: #f5efef;
+        }
+        .searching:hover{
+            background: #f5efef;
+        }
+        .searching{
+            box-sizing: border-box;
+            border-bottom: 1px solid #f5efef;
+            height: 50px;
+            font-size: 16px;
+            line-height: 40px;
+            padding: 5px 15px;
+            width: 375px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            .name{
+                display: inline-block;
+            }
+            .singer{
+                font-size: 14px;
+                display: inline-block;
+                color: rgba(0,0,0,0.5);
+            }
+        }
     }
     .radio{
         display: flex;
@@ -317,7 +440,7 @@ export default {
                         margin-left: 4px;
                         height: 150px;
                         width: 213px;
-                        background: white;
+                        background: linear-gradient(to right, #eaeaea, #ffffff, #f6f8fa, #e0e0e0);
                         div{
                             height: 34px;
                             font-size: 14px;

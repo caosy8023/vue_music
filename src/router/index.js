@@ -32,7 +32,7 @@ export default new Router({
       component: singerList,
       meta:{
         tabbar:true,
-        keepAlive:false
+        keepAlive:true
       }
     },
     {
@@ -41,7 +41,7 @@ export default new Router({
       component: topList,
       meta:{
         tabbar:true,
-        keepAlive:false
+        keepAlive:true
       }
     },
     {

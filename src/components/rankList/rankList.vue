@@ -257,6 +257,7 @@ export default {
         }
       }
       .mint-tab-container{
+        width: 375px;
         .detail{
           padding: 5px 15px;
           color: rgba(0, 0, 0, 0.5);

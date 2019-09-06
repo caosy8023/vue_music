@@ -1,10 +1,14 @@
 <template>
   <div id="app">
-      <keep-alive>
-        <router-view v-if="$route.meta.keepAlive"></router-view>
-      </keep-alive>
-      <router-view v-if="!$route.meta.keepAlive"></router-view>
     
+      <keep-alive>
+        <!-- <transition> -->
+          <router-view v-if="$route.meta.keepAlive"></router-view>
+        <!-- </transition> -->
+      </keep-alive>
+    <!-- <transition> -->
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <!-- </transition> -->
     <div @click="goPlaying" v-show="$route.meta.tabbar" class="tabbar">
       <img :style="'transform:rotate('+transform+'deg)'" class="logo" :src="`http://imgcache.qq.com/music/photo_new/T002R150x150M000${$store.getters.playDetail.albummid}.jpg?max_age=2592000`" alt="">
       <img v-show="!$store.getters.isPlay" class="play" @click.stop="playMusic" src="./assets/play-2.png" alt="">
@@ -216,19 +220,19 @@ export default {
 </script>
 
 <style lang="scss">
-// .toggle-enter{
-// 		opacity: 0;
-// 		transform: translateX(100%);
-// 	}
-// 	.toggle-leave-to{
-// 		opacity: 0;
-// 		transform: translateX(-100%);
-// 	}
-// 	.toggle-enter-active,
-// 	.toggle-leave-active{
-// 		transition: all 0.5s ease;
-// 		position: absolute;
-// 	}
+.v-enter{
+		opacity: 0;
+		transform: translateX(100%);
+	}
+	.v-leave-to{
+		opacity: 0;
+		transform: translateX(-100%);
+	}
+	.v-enter-active,
+	.v-leave-active{
+		transition: all 0.5s ease;
+		position: absolute;
+	}
 *{
   margin: 0;
   list-style: none;

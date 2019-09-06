@@ -182,7 +182,7 @@ export default {
             for(let i=0;i<this.songList1.length;i++){
               this.songList1[i].data = this.songList1[i].musicData
             }
-            console.log(this.songList1)
+            // console.log(this.songList1)
         }).catch(err => {
             console.log(err)
         })

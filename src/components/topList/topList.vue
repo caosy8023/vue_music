@@ -10,7 +10,7 @@
           <div class="list">
             <div @click="goRanklist(item.id)" class="list-item" v-for="item in topList" :key="item.id">
               <div class="left">
-                <img v-lazy="item.picUrl" :src="item.picUrl" alt="">
+                <img :src="item.picUrl" alt="">
               </div>
               <div class="right">
                 <div class="right-item" v-for="(items,index) in item.songList" :key="index">
@@ -117,7 +117,7 @@ export default {
             display: flex;
             flex-wrap: wrap;
             align-content: space-around;
-            background-color: white;
+            background: white;
             width: 215px;
             margin-left: 5px;
             padding: 15px 10px;

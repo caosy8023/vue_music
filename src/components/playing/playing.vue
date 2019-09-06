@@ -18,10 +18,13 @@
             <div class="bottom">
                 <div class="time">
                     <span style="color:white;position: relative;top:3px">{{timeFormate(currentTime)}}</span>
-                    <div @click="switchProgress" style="display:inline-block;border: 0.5px solid white;position: relative" class="progress" ref="progress">
-                        <div class="progress-bar"></div>
-                        <!-- <span class="progress-ball" ></span> -->
+                    <div @click="switchProgress" class="wrap" style="display:inline-block">
+                        <div @click="switchProgress" style="display:inline-block;border: 0.5px solid white;position: relative" class="progress" ref="progress">
+                            <div class="progress-bar"></div>
+                            <!-- <span class="progress-ball" ></span> -->
+                        </div>
                     </div>
+                    
                     <span style="color:white;position: relative;top:3px">{{timeFormate(allTime)}}</span>
                 </div>
                 <div class="paly-control">
@@ -206,11 +209,12 @@ export default {
         })
         },
       switchProgress(){
+        var body = document.querySelector('body').offsetWidth/10
         var e = window.event
         var audio = document.getElementById('audio')
         var progress = document.querySelector('.progress-bar')
         progress.style = 'left:'+e.layerX+'px'
-        this.currentTime = (e.layerX/264)*this.allTime
+        this.currentTime = (e.layerX/(7.04*body))*this.allTime
         audio.currentTime = this.currentTime
       },
       touchstart(){
@@ -267,14 +271,15 @@ export default {
           this.currentTime = audio.currentTime
         //   console.log(this.allTime,this.currentTime)
       },200)
+      var body = document.querySelector('body').offsetWidth/10
       setTimeout(()=>{
         audio.addEventListener('timeupdate',function(){
             _this.currentTime = audio.currentTime
             _this.musicTime = _this.timeFormate(audio.duration)
-            progress.style = 'left:'+(_this.currentTime/_this.allTime)*264+'px'
+            progress.style = 'left:'+(_this.currentTime/_this.allTime)*7.04*body+'px'
             // console.log(_this.currentTime,_this.musicTime,_this.allTime)
         })
-      },200)
+      },100)
   }
 };
 </script>
@@ -327,6 +332,10 @@ export default {
             .bottom{
                 width: 100%;
                 height: 180px;
+                .wrap{
+                    width: 264px;
+                    height: 20px;
+                }
                 .time{
                     padding: 0 20px;
                     .progress-bar{
