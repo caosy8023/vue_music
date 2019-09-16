@@ -88,7 +88,7 @@ export default {
               if(newV != '' && newV != null){
                   this.isSearch = true
                 axios({
-                    url:'https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg',
+                    url:'/api/splcloud/fcgi-bin/smartbox_new.fcg',
                     method:'get',
                     params:{
                         ...this.basicParams,
@@ -118,7 +118,7 @@ export default {
         // console.log(songmid)
         axios({
             method:'get',
-            url:'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg',
+            url:'/api/base/fcgi-bin/fcg_music_express_mobile3.fcg',
             params:{
             ...this.basicParams,
             guid:'2095717240',
@@ -134,6 +134,7 @@ export default {
             this.$store.dispatch('GET_PLAY',url)
             this.$store.dispatch('IS_PLAY',true)
             var playDetail = {
+            songmid:songmid,
             songname:songname,
             singername:singername,
             albumname:albumname,
@@ -210,7 +211,7 @@ export default {
         },
       getHotMusic(){
           axios({
-              url:'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg',
+              url:'/api/v8/fcg-bin/fcg_v8_toplist_cp.fcg',
               method:'get',
               params:{
                 //   tpl=3,
@@ -241,7 +242,7 @@ export default {
       getIndexMsg(){
           axios({
               method:'get',
-              url:'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg',
+              url:'/api/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg',
               params:this.basicParams
           }).then(res => {
               this.indexMsg = res.data.data
@@ -252,7 +253,7 @@ export default {
       },
       getHotkeys(){
           axios({
-              url:'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg',
+              url:'/api/splcloud/fcgi-bin/gethotkey.fcg',
               method:'get',
               params:{
                   ...this.basicParams

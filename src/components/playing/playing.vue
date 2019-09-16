@@ -11,8 +11,11 @@
                 <div class="title">
                     <p>{{$store.getters.playDetail.singername}}</p>
                 </div>
-                <div class="img" :style="'transform:rotate('+transform+'deg)'">
+                <div v-show="showImg" @click="lyrics" class="img" :style="'transform:rotate('+transform+'deg)'">
                     <img :src="img" alt="">
+                </div>
+                <div class="lyc" v-show="!showImg">
+                    <p class="lyc-item" v-for="(item,index) in songLyrics" :key="index">{{item.text}} <span style="display:none">{{item.time}}</span></p>
                 </div>
             </div>
             <div class="bottom">
@@ -58,13 +61,16 @@ export default {
         transform:0,
         musicTime:'',
         currentTime:'',
-        allTime:0
+        allTime:0,
+        showImg:true,
+        songLyrics:'',
     };
   },
   watch: {
       '$store.getters.playDetail':{
           handler(newV,oldV){
               this.img = `http://imgcache.qq.com/music/photo_new/T002R150x150M000${this.$store.getters.playDetail.albummid}.jpg?max_age=2592000`
+              this.getLyrics()
           },
           deep:true
       },
@@ -78,20 +84,67 @@ export default {
                     this.currentTime = audio.currentTime
                     console.log(this.currentTime)
                   },200)
-                  
               }
           },
           deep:true
       },
       'currentTime':{
           handler(newV,oldV){
-            //   console.log(newV)
+            var div = document.querySelector('.lyc')
+            var pNode = document.querySelectorAll('.lyc-item')
+            this.songLyrics.forEach((item,index) => {
+                if(item.time == this.timeFormate2(newV)){
+                    var classList = pNode[index].classList
+                    pNode[index].classList.add('active')
+                    console.log(index)
+                    for(var i=0;i<pNode.length;i++){
+                        if(i !== index){
+                            pNode[i].classList.remove('active')
+                        }
+                    }
+                }
+            })
           },
           deep:true
       }
   },
   computed: {},
   methods: {
+      formateLyc(data,istotalTime){
+        var lyricArr =[]
+        // 在这里对data进行歌词处理
+        // 转换其中的ascll
+        var newdata = data.replace(/&#(\d+);/g,function(data){
+            return String.fromCharCode(data.substr(2,2))
+        })
+        var dataArr = newdata.split('\n')
+        for(var i =0;i<dataArr.length;i++){
+            //以']'去分隔时间和歌词
+            var timetext = dataArr[i].split(']')
+            //需将时间的前半中括号去除,并将时间转换
+            var  time = timetext[0].replace(/[\[]/g,'').split(':')
+            
+            if(istotalTime){
+                var changetime = time[0] * 60 + parseInt(time[1])
+            }else{
+                var changetime = time[0] + ':'+ parseInt(time[1])
+            } 
+            //进行判断是否有歌词，没有的就跳过
+            if(!timetext[1]){
+                continue;
+            }
+            var text = timetext[1]
+            var obj ={
+                time:changetime,
+                text:text
+            }
+            lyricArr.push(obj)
+        }
+        return lyricArr
+      },
+      lyrics(){
+          this.showImg = false
+      },
       playPrev(){
           var playAround = this.$store.getters.playAround
           if(playAround.prev == undefined){
@@ -119,7 +172,7 @@ export default {
         // console.log(songmid)
         axios({
             method:'get',
-            url:'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg',
+            url:'/api/base/fcgi-bin/fcg_music_express_mobile3.fcg',
             params:{
             ...this.basicParams,
             guid:'2095717240',
@@ -135,6 +188,7 @@ export default {
             this.$store.dispatch('GET_PLAY',url)
             this.$store.dispatch('IS_PLAY',true)
             var playDetail = {
+            songmid:songmid,
             songname:songname,
             singername:singername,
             albumname:albumname,
@@ -253,10 +307,39 @@ export default {
               s = '0'+parseInt(time%60)
           }
           return m+':'+s
+      },
+      timeFormate2(time){
+          var m = parseInt(time/60)
+          var s = parseInt(time%60)
+          if(time/60 < 10){
+              m = '0'+parseInt(time/60)
+          }
+          if(parseInt(time%60) < 10){
+              s = parseInt(time%60)
+          }
+          return m+':'+s
+      },
+      getLyrics(){
+          axios({
+              url:'https://api.mlwei.com/music/api/',
+              method:'get',
+              params:{
+                  key:523077333,
+                  cache:1,
+                  type:'lrc',
+                  id:this.$store.getters.playDetail.songmid
+              }
+          }).then(res => {
+            //   console.log(res)
+              this.songLyrics = this.formateLyc(res.data)
+          }).catch(err => {
+              console.log(err)
+          })
       }
   },
   created() {},
   mounted() {
+      this.getLyrics()
       var _this = this
       this.getImg()
       setInterval(()=>{
@@ -326,6 +409,22 @@ export default {
                         width: 100%;
                         height: 100%;
                         border-radius: 50%;
+                    }
+                }
+                .lyc{
+                    margin-top: 10px;
+                    height: 430px;
+                    overflow-x: hidden;
+                    overflow-y: scroll;
+                    .active{
+                        color: aqua;
+                        font-size: 18px;
+                    }
+                    p{
+                        font-size: 16px;
+                        text-align: center;
+                        color: #f3e4e4;
+                        margin-top: 10px;
                     }
                 }
             }

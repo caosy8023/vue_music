@@ -13,7 +13,7 @@ export default {
     [GET_PLAYDEFAIL](state,data){
         state.playDetail = data
         localStorage.setItem('playDetail',JSON.stringify(state.playDetail))
-        // console.log(state.playDetail)
+        console.log(state.playDetail)
     },
     [GET_ISEND](state,data){
         state.isEnd = data

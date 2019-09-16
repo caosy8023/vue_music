@@ -13,6 +13,8 @@ if(playMusic == null || playMusic == undefined){
 }
 if(playDetail == null || playDetail == undefined){
     playDetail = {
+        songmid: "003NGKTc2tabpb",
+        albummid: "001VzWs23VFsO8",
         songname:'笑场',
         singername:'薛之谦',
         albumname:'尘'

@@ -116,7 +116,7 @@ export default {
       // console.log(songmid)
       axios({
         method:'get',
-        url:'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg',
+        url:'/api/base/fcgi-bin/fcg_music_express_mobile3.fcg',
         params:{
           ...this.basicParams,
           guid:'2095717240',
@@ -132,6 +132,7 @@ export default {
         this.$store.dispatch('GET_PLAY',url)
         this.$store.dispatch('IS_PLAY',true)
         var playDetail = {
+          songmid:songmid,
           songname:songname,
           singername:singername,
           albumname:albumname,

@@ -47,7 +47,7 @@ export default {
     getTopList(){
       axios({
         method:'get',
-        url:'https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg',
+        url:'/api/v8/fcg-bin/fcg_myqq_toplist.fcg',
         params:this.basicParams
       }).then(res => {
         this.topList = res.data.data.topList
