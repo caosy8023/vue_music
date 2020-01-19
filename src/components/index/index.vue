@@ -62,6 +62,7 @@
 
 <script>
 import axios from 'axios'
+import { resolve, reject, async } from 'q';
 export default {
   name:'index',
   components: {},
@@ -268,6 +269,13 @@ export default {
   },
   created() {},
   mounted() {
+      async function test(){
+          return 'test'
+      }
+      test().then(res => {
+          console.log(res)
+      })
+      console.log(2)
       var _this = this
       this.getIndexMsg()
       this.getHotMusic()
