@@ -12,6 +12,7 @@ import Mui from 'vue-awesome-mui';
 Vue.use(Mui);
 Vue.use(Mint)
 Vue.config.productionTip = false
+console.log(2222)
 Vue.prototype.basicParams = {
   g_tk: 1604785682,
   uin: 494873674, // qq acount
